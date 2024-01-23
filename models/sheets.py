@@ -14,9 +14,16 @@ scope = [
 ]
 
 
+# Obtener la ruta del directorio principal del proyecto
+project_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Construir la ruta completa al archivo JSON de credenciales en el directorio principal
+credentials_path = os.path.join(project_dir, "gs_credentials.json")
+
 credenciales = ServiceAccountCredentials.from_json_keyfile_name(
-    "gs_credentials.json", scope
+    credentials_path, scope
 )
+
 cliente = gspread.authorize(credenciales)
 sheets_key = str(os.getenv("KEY_SHEETS"))
 
@@ -89,9 +96,4 @@ if __name__ == "__main__":
 
     parrafo = ConectarSheetMensaje()
     print(parrafo[indice])
-
-
-
-
-
 
